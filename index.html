@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Reshito - Home</title>
+</head>
+<body>
+    <div class="form-container">
+        <form id="form">
+            <input type="date" placeholder="Date" class="date" id="date">
+            <p class="date-error-msg" id="date-error-msg"></p>
+            <select name="payment-method" id="payment-method">
+                <option value="">Payment Method</option>
+                <option value="cash">Cash</option>
+                <option value="debit-credit">Debit/Credit Card</option>
+                <option value="FPX">FPX Bank Transfer</option>
+                <option value="ewallet">E-Wallet</option>
+            </select>
+            <p class="payment-error-msg" id="payment-error-msg"></p>
+            <input type="text" placeholder="Description" class="description" id="description">
+            <p class="descript-error-msg" id="descript-error-msg"></p>
+            <input type="number" placeholder="Quantity" class="quantity" id="quantity">
+            <p class="quantity-error-msg" id="quantity-error-msg"></p>
+            <input type="number" placeholder="Cost" class="cost" id="cost">
+            <p class="cost-error-msg" id="cost-error-msg"></p>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead class="table-header">
+                <tr>
+                    <th>Date</th>
+                    <th>Payment Method</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody class="table-body" id="table-body">
+                <!-- table row and table data will insert here dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
