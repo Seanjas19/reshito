@@ -4,44 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Reshito - Home</title>
+    <title>Reshito</title>
 </head>
 <body>
     <div class="form-container">
-        <form id="form">
-            <input type="date" placeholder="Date" class="date" id="date">
-            <p class="date-error-msg" id="date-error-msg"></p>
-            <select name="payment-method" id="payment-method">
+        <form class="form" id="form">
+            <input type="date" class="date" id="date">
+            <p class="date-err-msg" id="date-err-msg"></p>
+            <select name="payment-method" class="payment-method" id="payment-method">
                 <option value="">Payment Method</option>
-                <option value="cash">Cash</option>
-                <option value="debit-credit">Debit/Credit Card</option>
-                <option value="FPX">FPX Bank Transfer</option>
-                <option value="ewallet">E-Wallet</option>
+                <option value="Cash">Cash</option>
+                <option value="Credit/Debit Card">Credit/Debit Card</option>
+                <option value="FPX Banking">FPX Banking</option>
+                <option value="E-Wallet">E-Wallet</option>
             </select>
-            <p class="payment-error-msg" id="payment-error-msg"></p>
+            <p class="payment-err-msg" id="payment-err-msg"></p>
             <input type="text" placeholder="Description" class="description" id="description">
-            <p class="descript-error-msg" id="descript-error-msg"></p>
+            <p class="descript-err-msg" id="descript-err-msg"></p>
             <input type="number" placeholder="Quantity" class="quantity" id="quantity">
-            <p class="quantity-error-msg" id="quantity-error-msg"></p>
+            <p class="quantity-err-msg" id="quantity-err-msg"></p>
             <input type="number" placeholder="Cost" class="cost" id="cost">
-            <p class="cost-error-msg" id="cost-error-msg"></p>
-            <button type="submit" class="submit-btn">Submit</button>
+            <p class="cost-err-msg" id="cost-err-msg"></p>
+            <button type="submit" class="submit" id="submit">Submit</button>
         </form>
     </div>
-
     <div class="table-container">
-        <table class="table">
-            <thead class="table-header">
+        <table class="table" id="table">
+            <thead class="table-head" id="table-head">
                 <tr>
                     <th>Date</th>
                     <th>Payment Method</th>
                     <th>Description</th>
                     <th>Quantity</th>
                     <th>Cost</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody class="table-body" id="table-body">
-                <!-- table row and table data will insert here dynamically -->
+                
             </tbody>
         </table>
     </div>

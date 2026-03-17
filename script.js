@@ -1,199 +1,193 @@
 const form = document.getElementById("form");
 
-loadToDisplayData();
+const storageKey = "Expenses Data";
+
+displayExistedData();
 
 form.addEventListener("submit", function(event) {
-
-    //To avoid browser default refresh when click submit button
     event.preventDefault();
-
-    if (validateForm()){
+    
+    if (validateForm()) {
         appendTableRow();
         saveToLocalStorage();
         resetForm();
     }
 
-})
+});
 
-//Reset the form input field
 function resetForm() {
     form.reset();
 }
 
-//Append Table Row 
-function appendTableRow() {
+//Get element values from input field
+function getElementValue() {
 
-    //Declare & Collect Data from HTML input field
-    const date = document.getElementById("date").value;
-    const paymentMethod = document.getElementById("payment-method").value;
-    const description = document.getElementById("description").value;
-    const quantity = document.getElementById("quantity").value;
-    let cost = document.getElementById("cost").value;
+    return {
+        date: document.getElementById("date").value,
+        payment: document.getElementById("payment-method").value,
+        description: document.getElementById("description").value,
+        quantity: document.getElementById("quantity").value,
+        cost: document.getElementById("cost").value,
+    };
 
-    cost *= quantity; 
+};
 
-    buildTableRow({
-        date: date,
-        paymentMethod: paymentMethod,
-        description: description,
-        quantity: quantity,
-        cost: cost
-    });
-}
-
-
+//validate form field data
 function validateForm() {
 
-    //Boolean declaration to be used in event listener
+    //get element values
+    const data = getElementValue();
+
+    //get error message element id
+    const dateErrMsg = document.getElementById("date-err-msg");
+    const paymentErrMsg = document.getElementById("payment-err-msg");
+    const descriptErrMsg = document.getElementById("descript-err-msg");
+    const quantityErrMsg = document.getElementById("quantity-err-msg");
+    const costErrMsg = document.getElementById("cost-err-msg");
+
+    //make function become boolean unit
     let isValid = true;
-    
-    //get value from input field
-    const date = document.getElementById("date").value;
-    const paymentMethod = document.getElementById("payment-method").value;
-    const description = document.getElementById("description").value;
-    const quantity = document.getElementById("quantity").value;
-    const cost = document.getElementById("cost").value;
 
-    //get error message element by id
-    const dateErrorMsg = document.getElementById("date-error-msg");
-    const paymentErrorMsg = document.getElementById("payment-error-msg");
-    const descriptionErrorMsg = document.getElementById("descript-error-msg");
-    const quantityErrorMsg = document.getElementById("quantity-error-msg");
-    const costErrorMsg = document.getElementById("cost-error-msg");
-    
-    //Condition for validation
-    //Check date if is empty
-    if (date === "") {
-        dateErrorMsg.textContent = "Please select a date";
-        dateErrorMsg.style.display = "block";
+    //validate date input value
+    if (data.date === "") {
+        dateErrMsg.textContent = "Please select a date";
+        dateErrMsg.style.display = "block";
         isValid = false;
     }
     else {
-        dateErrorMsg.style.display = "none";
-    }
-    //Check payment method if is empty
-    if (paymentMethod === "") {
-        paymentErrorMsg.textContent = "Please select a payment method";
-        paymentErrorMsg.style.display = "block";
+        dateErrMsg.style.display = "none";
+    };
+
+    //validate payment method input value
+    if (data.payment === "") {
+        paymentErrMsg.textContent = "Please choose a payment method";
+        paymentErrMsg.style.display = "block";
         isValid = false;
     }
     else {
-        paymentErrorMsg.style.display = "none";
-    }
-    //Check description if is empty
-    if (description === "") {
-        descriptionErrorMsg.textContent = "Please enter a description";
-        descriptionErrorMsg.style.display = "block";
+        paymentErrMsg.style.display = "none";
+    };
+
+    //validate description input value
+    if (data.description === "") {
+        descriptErrMsg.textContent = "Please enter a description";
+        descriptErrMsg.style.display = "block";
         isValid = false;
     }
     else {
-        descriptionErrorMsg.style.display = "none";
+        descriptErrMsg.style.display = "none";
     }
-    //Check quantity if is empty
-    if (quantity === "") {
-        quantityErrorMsg.textContent = "Please enter a number of quantity";
-        quantityErrorMsg.style.display = "block";
+
+    //validate quantity input value
+    if (data.quantity === "") {
+        quantityErrMsg.textContent = "Please enter a quantity";
+        quantityErrMsg.style.display = "block";
         isValid = false;
     }
-    //Check quantity is less than 1
-    else if (quantity < 1) {
-        quantityErrorMsg.textContent = "Quantity must be 1 or more";
-        quantityErrorMsg.style.display = "block";
-        isValid = false;
-    }
-    else {
-        quantityErrorMsg.style.display = "none";
-    }
-    //Check cost if is empty
-    if (cost === "") {
-        costErrorMsg.textContent = "Please enter item cost";
-        costErrorMsg.style.display = "block";
-        isValid = false;
-    }
-    //Check cost is less or equal to 0
-    else if (cost <= 0) {
-        costErrorMsg.textContent = "Cost must be greater than 0";
-        costErrorMsg.style.display = "block";
+    //validate input value is less than 1
+    else if (data.quantity < 1) {
+        quantityErrMsg.textContent = "Quantity must be 1 or more";
+        quantityErrMsg.style.display = "block";
         isValid = false;
     }
     else {
-        costErrorMsg.style.display = "none";
+        quantityErrMsg.style.display = "none";
     }
-    
-    //return value to function caller
+
+    //validate cost input value
+    if (data.cost === "") {
+        costErrMsg.textContent = "Please enter a cost";
+        costErrMsg.style.display = "block";
+        isValid = false;
+    }
+    //validate if input value less or equal to 0
+    else if (data.cost <= 0) {
+        costErrMsg.textContent = "Cost must be more than 0";
+        costErrMsg.style.display = "block";
+        isValid = false;
+    }
+    else {
+        costErrMsg.style.display = "none";
+    }
+
     return isValid;
-}
+};
 
-function saveToLocalStorage() {
+//build table row
+function buildTableRow(data) {
 
-    const key = "Retrieve Data";
-
-    const retrieveData = JSON.parse(localStorage.getItem(key) || "[]" );
-    
-    //get value from input field
-    const date = document.getElementById("date").value;
-    const paymentMethod = document.getElementById("payment-method").value;
-    const description = document.getElementById("description").value;
-    const quantity = document.getElementById("quantity").value;
-    let cost = document.getElementById("cost").value;
-
-    cost *= quantity;
-
-    const newValue = {
-        date: date,
-        paymentMethod: paymentMethod,
-        description: description,
-        quantity: quantity,
-        cost: cost
-    };
-
-    retrieveData.push(newValue);
-
-    localStorage.setItem(key, JSON.stringify(retrieveData));
-
-}
-
-
-function loadToDisplayData() {
-
-    const displayData = JSON.parse(localStorage.getItem("Retrieve Data") || "[]");
-
-    for (const data of displayData) {
-
-        buildTableRow(data);
-
-    };
-}
-
-function buildTableRow(expensesData) {
-
-    //Get existing element from HTML
+    //get table body element id
     const tableBody = document.getElementById("table-body");
 
-    //Create HTML element
+    //create table row element
     const tableRow = document.createElement("tr");
 
-    //Move an element inside an element
+    //append table row to table body
+    /* 
+    <tbody>
+        <tr></tr>  <--- Append 
+    </tbody>
+    */
     tableBody.appendChild(tableRow);
 
-    //Create table data elements (Each variables storing different value instead of let all in one)
-    const tableDataDate = document.createElement("td");
-    const tableDataPayment = document.createElement("td");
-    const tableDataDescript = document.createElement("td");
-    const tableDataQuantity = document.createElement("td");
-    const tableDataCost = document.createElement("td");
+    //create table data for each values
+    const dateTableData = document.createElement("td");
+    const paymentTableData = document.createElement("td");
+    const descriptionTableData = document.createElement("td");
+    const quantityTableData = document.createElement("td");
+    const costTableData = document.createElement("td");
+    const totalTableData = document.createElement("td");
 
-    //Feeding each table data element with specific input data
-    tableDataDate.textContent = expensesData.date;
-    tableDataPayment.textContent = expensesData.paymentMethod;
-    tableDataDescript.textContent = expensesData.description;
-    tableDataQuantity.textContent = expensesData.quantity;
-    tableDataCost.textContent = expensesData.cost;
+    //feed data to each created element
+    dateTableData.textContent = data.date;
+    paymentTableData.textContent = data.payment;
+    descriptionTableData.textContent = data.description;
+    quantityTableData.textContent = data.quantity;
+    costTableData.textContent = data.cost;
+    totalTableData.textContent = data.cost * data.quantity;
 
-    //Append them to table row element
-    tableRow.appendChild(tableDataDate);
-    tableRow.appendChild(tableDataPayment);
-    tableRow.appendChild(tableDataDescript);
-    tableRow.appendChild(tableDataQuantity);
-    tableRow.appendChild(tableDataCost);
-}
+    //append table body to table row
+    tableRow.appendChild(dateTableData);
+    tableRow.appendChild(paymentTableData);
+    tableRow.appendChild(descriptionTableData);
+    tableRow.appendChild(quantityTableData);
+    tableRow.appendChild(costTableData);
+    tableRow.appendChild(totalTableData);
+};
+
+//append table row
+function appendTableRow() {
+
+    //get element data
+    const data = getElementValue();
+
+    //build table row with table dataS
+    buildTableRow(data);
+};
+
+//Why? Because using local storage we need to get existing data first if not then we will override the new data in it
+function saveToLocalStorage() {
+
+    //get existing data from local storage if no then use empty array 
+    const getExistedData = JSON.parse(localStorage.getItem(storageKey) || "[]");
+
+    //get new data from input field
+    const newData = getElementValue();
+
+    //push new data to existing array
+    getExistedData.push(newData);
+
+    //save back to local storage
+    localStorage.setItem(storageKey, JSON.stringify(getExistedData));
+};
+
+//Why? This is like Reverse Engineering which is the opposite way of append table row just using existing data
+function displayExistedData() {
+
+    const getExistedData = JSON.parse(localStorage.getItem(storageKey) || "[]");
+
+    for (const data of getExistedData) {
+        buildTableRow(data);
+    };
+
+};
