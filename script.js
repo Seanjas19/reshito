@@ -8,8 +8,11 @@ form.addEventListener("submit", function(event) {
     event.preventDefault();
     
     if (validateForm()) {
-        appendTableRow();
-        saveToLocalStorage();
+        const id = Date.now();
+        //declare the id and get elements from input fields
+        const data = declarationData(id);
+        saveToLocalStorage(data);
+        appendTableRow(data);
         resetForm();
     }
 
@@ -138,6 +141,9 @@ function buildTableRow(data) {
     const costTableData = document.createElement("td");
     const totalTableData = document.createElement("td");
 
+    //create delete button
+    const deleteBtn = document.createElement("button");
+
     //feed data to each created element
     dateTableData.textContent = data.date;
     paymentTableData.textContent = data.payment;
@@ -146,6 +152,9 @@ function buildTableRow(data) {
     costTableData.textContent = data.cost;
     totalTableData.textContent = data.cost * data.quantity;
 
+    //text content of the delete button should be "Delete"
+    deleteBtn.textContent = "Delete"
+
     //append table body to table row
     tableRow.appendChild(dateTableData);
     tableRow.appendChild(paymentTableData);
@@ -153,29 +162,39 @@ function buildTableRow(data) {
     tableRow.appendChild(quantityTableData);
     tableRow.appendChild(costTableData);
     tableRow.appendChild(totalTableData);
+
+    //append delete button
+    tableRow.appendChild(deleteBtn);
+
+    deleteBtn.addEventListener("click", function() {
+
+        const getExistedData = JSON.parse(localStorage.getItem(storageKey) || "[]"); 
+
+        const filterData = getExistedData.filter(function(item) {
+            return item.id !== data.id;
+        });
+
+        localStorage.setItem(storageKey, JSON.stringify(filterData));
+
+        tableRow.remove();
+    })
 };
 
 //append table row
-function appendTableRow() {
-
-    //get element data
-    const data = getElementValue();
+function appendTableRow(data) {
 
     //build table row with table dataS
     buildTableRow(data);
 };
 
 //Why? Because using local storage we need to get existing data first if not then we will override the new data in it
-function saveToLocalStorage() {
+function saveToLocalStorage(data) {
 
     //get existing data from local storage if no then use empty array 
     const getExistedData = JSON.parse(localStorage.getItem(storageKey) || "[]");
 
-    //get new data from input field
-    const newData = getElementValue();
-
     //push new data to existing array
-    getExistedData.push(newData);
+    getExistedData.push(data);
 
     //save back to local storage
     localStorage.setItem(storageKey, JSON.stringify(getExistedData));
@@ -190,4 +209,12 @@ function displayExistedData() {
         buildTableRow(data);
     };
 
+};
+
+function declarationData(id) {
+    
+    return {
+        id: id,
+        ...getElementValue()
+    };
 };
