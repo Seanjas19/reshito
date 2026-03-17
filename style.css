@@ -1,23 +1,15 @@
-/*
-*{
-    margin: 0;
-    padding: 0;
-}
-
-*/
-
-.date-error-msg,
-.payment-error-msg,
-.descript-error-msg,
-.quantity-error-msg,
-.cost-error-msg {
-    display:none;
-}
-
 .date,
 .payment-method,
 .description,
 .quantity,
 .cost {
-    display:block;
+    display: block;
+}
+
+.date-err-msg,
+.payment-err-msg,
+.descript-err-msg,
+.quantity-err-msg,
+.cost-err-msg {
+    display: none;
 }
