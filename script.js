@@ -2,18 +2,28 @@ const form = document.getElementById("form");
 
 const storageKey = "Expenses Data";
 
+let editingId = null;
+
+let editingRow = null;
+
 displayExistedData();
 
 form.addEventListener("submit", function(event) {
     event.preventDefault();
     
     if (validateForm()) {
-        const id = Date.now();
-        //declare the id and get elements from input fields
-        const data = declarationData(id);
-        saveToLocalStorage(data);
-        appendTableRow(data);
+        if (editingId === null) {
+            const id = Date.now();
+            //declare the id and get elements from input fields
+            const data = declarationData(id);
+            saveToLocalStorage(data);
+            appendTableRow(data);
+        }
+        else {
+            updateTableRow();
+        }
         resetForm();
+        editingId = null;
     }
 
 });
@@ -117,7 +127,7 @@ function validateForm() {
 };
 
 //build table row
-function buildTableRow(data) {
+function buildTableRow(data, referenceRow) {
 
     //get table body element id
     const tableBody = document.getElementById("table-body");
@@ -131,7 +141,12 @@ function buildTableRow(data) {
         <tr></tr>  <--- Append 
     </tbody>
     */
-    tableBody.appendChild(tableRow);
+    if (referenceRow) {
+        tableBody.insertBefore(tableRow, referenceRow);
+    }
+    else {
+        tableBody.appendChild(tableRow);
+    }
 
     //create table data for each values
     const dateTableData = document.createElement("td");
@@ -140,6 +155,9 @@ function buildTableRow(data) {
     const quantityTableData = document.createElement("td");
     const costTableData = document.createElement("td");
     const totalTableData = document.createElement("td");
+
+    //create edit button
+    const editBtn = document.createElement("button");
 
     //create delete button
     const deleteBtn = document.createElement("button");
@@ -152,6 +170,9 @@ function buildTableRow(data) {
     costTableData.textContent = data.cost;
     totalTableData.textContent = data.cost * data.quantity;
 
+    //text content of the edit button should be "Edit"
+    editBtn.textContent = "Edit"
+
     //text content of the delete button should be "Delete"
     deleteBtn.textContent = "Delete"
 
@@ -163,8 +184,23 @@ function buildTableRow(data) {
     tableRow.appendChild(costTableData);
     tableRow.appendChild(totalTableData);
 
+    //append edit button
+    tableRow.appendChild(editBtn);
+
     //append delete button
     tableRow.appendChild(deleteBtn);
+
+    editBtn.addEventListener("click", function() {
+        document.getElementById("date").value = data.date;
+        document.getElementById("payment-method").value = data.payment;
+        document.getElementById("description").value = data.description;
+        document.getElementById("quantity").value = data.quantity;
+        document.getElementById("cost").value = data.cost;
+
+        editingId = data.id;
+
+        editingRow = tableRow;
+    });
 
     deleteBtn.addEventListener("click", function() {
 
@@ -217,4 +253,30 @@ function declarationData(id) {
         id: id,
         ...getElementValue()
     };
+};
+
+function updateTableRow() {
+    const getExistingData = JSON.parse(localStorage.getItem(storageKey) || "[]");
+
+    const mapData = getExistingData.map(function(item) {
+        if (item.id === editingId) {
+            return {
+                id: editingId,
+                ...getElementValue()
+            };
+        }
+        else {
+            return item;
+        }
+    });
+
+    localStorage.setItem(storageKey, JSON.stringify(mapData));
+
+    const updateExpenses = mapData.find(function(item) {
+        return item.id === editingId;
+    })
+
+    buildTableRow(updateExpenses, editingRow);
+
+    editingRow.remove();
 };
