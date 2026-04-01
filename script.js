@@ -8,6 +8,8 @@ let editingRow = null;
 
 displayExistedData();
 
+calculateTotalExpenses();
+
 form.addEventListener("submit", function(event) {
     event.preventDefault();
     
@@ -26,6 +28,7 @@ form.addEventListener("submit", function(event) {
         editingId = null;
     }
 
+    calculateTotalExpenses();
 });
 
 function resetForm() {
@@ -213,6 +216,8 @@ function buildTableRow(data, referenceRow) {
         localStorage.setItem(storageKey, JSON.stringify(filterData));
 
         tableRow.remove();
+
+        calculateTotalExpenses();
     })
 };
 
@@ -280,3 +285,27 @@ function updateTableRow() {
 
     editingRow.remove();
 };
+
+function calculateTotalExpenses() {
+    const getExistingData = JSON.parse(localStorage.getItem(storageKey) || "[]");
+
+    const todayDate = new Date();
+
+    const todayMonth = todayDate.getMonth();
+
+    const todayYear = todayDate.getFullYear();
+
+    const filterExpenses = getExistingData.filter(function(item) {
+        const expenseDate = new Date(item.date);
+
+        return expenseDate.getMonth() === todayMonth && expenseDate.getFullYear() === todayYear;
+    });
+
+    const totalExpenses = filterExpenses.reduce(function(accumulator, item) {
+        return accumulator + (item.cost * item.quantity)
+    }, 0);
+
+    const getTotalElement = document.getElementById("total-spend-amount");
+
+    getTotalElement.textContent = totalExpenses.toFixed(2);
+}
