@@ -1,6 +1,6 @@
 const form = document.getElementById("form");
 
-const storageKey = "Expenses Data";
+const storageKey = "reshito-data";
 
 let editingId = null;
 
@@ -37,13 +37,17 @@ function resetForm() {
 
 //Get element values from input field
 function getElementValue() {
+    
+    const quantityValue = parseInt(document.getElementById("quantity").value);
+
+    const costValue = parseFloat(document.getElementById("cost").value);
 
     return {
         date: document.getElementById("date").value,
         payment: document.getElementById("payment-method").value,
         description: document.getElementById("description").value,
-        quantity: document.getElementById("quantity").value,
-        cost: document.getElementById("cost").value,
+        quantity: quantityValue,
+        cost: costValue
     };
 
 };
@@ -95,7 +99,7 @@ function validateForm() {
     }
 
     //validate quantity input value
-    if (data.quantity === "") {
+    if (isNaN(data.quantity)) {
         quantityErrMsg.textContent = "Please enter a quantity";
         quantityErrMsg.style.display = "block";
         isValid = false;
@@ -111,7 +115,7 @@ function validateForm() {
     }
 
     //validate cost input value
-    if (data.cost === "") {
+    if (isNaN(data.cost)) {
         costErrMsg.textContent = "Please enter a cost";
         costErrMsg.style.display = "block";
         isValid = false;
@@ -296,8 +300,10 @@ function calculateTotalExpenses() {
     const todayYear = todayDate.getFullYear();
 
     const filterExpenses = getExistingData.filter(function(item) {
-        const expenseDate = new Date(item.date);
-
+        const itemDate = item.date.split("-");
+        console.log(itemDate);
+        const expenseDate = new Date(parseInt(itemDate[0]), parseInt(itemDate[1]) - 1, parseInt(itemDate[2]));
+        console.log(expenseDate);
         return expenseDate.getMonth() === todayMonth && expenseDate.getFullYear() === todayYear;
     });
 
