@@ -169,6 +169,10 @@ function buildTableRow(data, referenceRow) {
     //create delete button
     const deleteBtn = document.createElement("button");
 
+    //wrap edit and delete button
+    const actionTableData = document.createElement("td");
+    actionTableData.className = "action-cell";
+
     //feed data to each created element
     dateTableData.textContent = data.date;
     paymentTableData.textContent = data.payment;
@@ -191,11 +195,15 @@ function buildTableRow(data, referenceRow) {
     tableRow.appendChild(costTableData);
     tableRow.appendChild(totalTableData);
 
-    //append edit button
-    tableRow.appendChild(editBtn);
+    //append table data that wanted to wrap edit & delete button
+    tableRow.appendChild(actionTableData);
 
-    //append delete button
-    tableRow.appendChild(deleteBtn);
+    //append edit button to table data
+    actionTableData.appendChild(editBtn);
+
+    //append delete button to table data
+    actionTableData.appendChild(deleteBtn);
+
 
     editBtn.addEventListener("click", function() {
         document.getElementById("date").value = data.date;
