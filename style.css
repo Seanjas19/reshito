@@ -14,9 +14,19 @@
     display: none;
 }
 
-.form-container, .summary, .table-container {
+.form-container {
     margin: 0 auto;
     width: 500px;
+}
+
+.summary {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.table-container {
+    margin: 0 auto;
+    width: 800px;
 }
 
 .form label {
@@ -51,4 +61,13 @@
 
 .payment-header-cell {
     white-space: nowrap;
+}
+
+th {
+    padding: 15px 20px;
+}
+
+td {
+    text-align: center;
+    padding: 15px 20px;
 }
