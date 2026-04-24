@@ -13,3 +13,33 @@
 .cost-err-msg {
     display: none;
 }
+
+.form-container, .summary, .table-container {
+    margin: 0 auto;
+    width: 500px;
+}
+
+.form label {
+    display: block;
+    margin: 6px 0;
+    padding: 4px 0;
+    font-size: large;
+    width: 100%
+}
+
+.form input, .form select {
+    display: block;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form input::placeholder {
+    font-size: medium;
+}
+
+.form button {
+    display: block;
+    margin: 16px auto;
+    padding: 10px;
+}
