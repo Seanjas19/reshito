@@ -100,3 +100,20 @@ td {
     padding: 1rem 1.25rem;
 }
 
+.form button {
+    cursor: pointer;
+    padding: 0.75rem 2rem;
+    border-radius: 1rem;
+    color: var(--background-color);
+    background-color: var(--text-color);
+    border: 2px solid var(--label-color);
+    transition: background-color 0.2s ease;
+}
+
+.form button:hover {
+    background-color: var(--focus-color);
+}
+
+.form button:active {
+    background-color: var(--label-color);
+}
