@@ -89,9 +89,16 @@ body {
     white-space: nowrap;
 }
 
+tr {
+    border-bottom: 1px solid var(--label-color);
+}
+
 th {
-    color: var(--label-color);
+    color: var(--background-color);
     padding: 1rem 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    background-color: var(--text-color);
 }
 
 td {
@@ -115,5 +122,30 @@ td {
 }
 
 .form button:active {
+    background-color: var(--label-color);
+}
+
+.table-body tr:nth-child(odd) {
+    background-color: var(--border-color);
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.edit-btn, .delete-btn {
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 12px;
+    background-color: var(--text-color);
+    color: var(--background-color);
+    cursor: pointer;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    background-color: var(--focus-color);
+}
+
+.edit-btn:active, .delete-btn:active {
     background-color: var(--label-color);
 }

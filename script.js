@@ -165,10 +165,10 @@ function buildTableRow(data, referenceRow) {
 
     //create edit button
     const editBtn = document.createElement("button");
-
+    editBtn.className = "edit-btn";
     //create delete button
     const deleteBtn = document.createElement("button");
-
+    deleteBtn.className = "delete-btn";
     //wrap edit and delete button
     const actionTableData = document.createElement("td");
     actionTableData.className = "action-cell";
