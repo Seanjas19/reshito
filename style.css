@@ -4,6 +4,8 @@
     --focus-color: #6c757dff;
     --text-color: #495057ff;
     --label-color: #212529ff;
+    --error-color: #dc3545;
+    --error-bg-color: #f5d9d6;
 }
 
 body {
@@ -148,4 +150,12 @@ table {
 
 .edit-btn:active, .delete-btn:active {
     background-color: var(--label-color);
+}
+
+.err-msg {
+    color: var(--error-color);
+    background-color: var(--error-bg-color);
+    padding: 0.5rem 0.5rem;
+    border-left: 4px solid var(--error-color);
+    border-radius: 8px;
 }
