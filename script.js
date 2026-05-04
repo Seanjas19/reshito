@@ -16,13 +16,11 @@ const cancelBtn = document.getElementById("cancel-btn");
 
 const modalOverlay = document.getElementById("modal-overlay");
 
-confirmBtn.addEventListener("click", function() {
+confirmBtn.addEventListener("click", () => {
 
     const getExistedData = JSON.parse(localStorage.getItem(storageKey) || "[]"); 
 
-    const filterData = getExistedData.filter(function(item) {
-        return item.id !== deletingData.id;
-    });
+    const filterData = getExistedData.filter(item => item.id !== deletingData.id);
 
     localStorage.setItem(storageKey, JSON.stringify(filterData));
 
@@ -35,7 +33,7 @@ confirmBtn.addEventListener("click", function() {
 
 
 
-cancelBtn.addEventListener("click", function() {
+cancelBtn.addEventListener("click", () => {
     modalOverlay.style.display = "none";
 });
 
@@ -44,7 +42,7 @@ displayExistedData();
 
 calculateTotalExpenses();
 
-form.addEventListener("submit", function(event) {
+form.addEventListener("submit", event => {
     event.preventDefault();
     
     if (validateForm()) {
@@ -90,7 +88,7 @@ function getElementValue() {
 function validateForm() {
 
     //get element values
-    const data = getElementValue();
+    const { date, payment, description, quantity, cost } = getElementValue();
 
     //get error message element id
     const dateErrMsg = document.getElementById("date-err-msg");
@@ -103,7 +101,7 @@ function validateForm() {
     let isValid = true;
 
     //validate date input value
-    if (data.date === "") {
+    if (date === "") {
         dateErrMsg.textContent = "Please select a date";
         dateErrMsg.style.display = "block";
         isValid = false;
@@ -113,7 +111,7 @@ function validateForm() {
     };
 
     //validate payment method input value
-    if (data.payment === "") {
+    if (payment === "") {
         paymentErrMsg.textContent = "Please choose a payment method";
         paymentErrMsg.style.display = "block";
         isValid = false;
@@ -123,7 +121,7 @@ function validateForm() {
     };
 
     //validate description input value
-    if (data.description === "") {
+    if (description === "") {
         descriptErrMsg.textContent = "Please enter a description";
         descriptErrMsg.style.display = "block";
         isValid = false;
@@ -133,13 +131,13 @@ function validateForm() {
     }
 
     //validate quantity input value
-    if (isNaN(data.quantity)) {
+    if (isNaN(quantity)) {
         quantityErrMsg.textContent = "Please enter a quantity";
         quantityErrMsg.style.display = "block";
         isValid = false;
     }
     //validate input value is less than 1
-    else if (data.quantity < 1) {
+    else if (quantity < 1) {
         quantityErrMsg.textContent = "Quantity must be 1 or more";
         quantityErrMsg.style.display = "block";
         isValid = false;
@@ -149,13 +147,13 @@ function validateForm() {
     }
 
     //validate cost input value
-    if (isNaN(data.cost)) {
+    if (isNaN(cost)) {
         costErrMsg.textContent = "Please enter a cost";
         costErrMsg.style.display = "block";
         isValid = false;
     }
     //validate if input value less or equal to 0
-    else if (data.cost <= 0) {
+    else if (cost <= 0) {
         costErrMsg.textContent = "Cost must be more than 0";
         costErrMsg.style.display = "block";
         isValid = false;
@@ -239,7 +237,7 @@ function buildTableRow(data, referenceRow) {
     actionTableData.appendChild(deleteBtn);
 
 
-    editBtn.addEventListener("click", function() {
+    editBtn.addEventListener("click", () => {
         document.getElementById("date").value = data.date;
         document.getElementById("payment-method").value = data.payment;
         document.getElementById("description").value = data.description;
@@ -251,7 +249,7 @@ function buildTableRow(data, referenceRow) {
         editingRow = tableRow;
     });
 
-    deleteBtn.addEventListener("click", function() {
+    deleteBtn.addEventListener("click", () => {
 
         modalOverlay.style.display = "block";
 
@@ -304,7 +302,7 @@ function declarationData(id) {
 function updateTableRow() {
     const getExistingData = JSON.parse(localStorage.getItem(storageKey) || "[]");
 
-    const mapData = getExistingData.map(function(item) {
+    const mapData = getExistingData.map(item => {
         if (item.id === editingId) {
             return {
                 id: editingId,
@@ -318,7 +316,7 @@ function updateTableRow() {
 
     localStorage.setItem(storageKey, JSON.stringify(mapData));
 
-    const updateExpenses = mapData.find(function(item) {
+    const updateExpenses = mapData.find(item => {
         return item.id === editingId;
     })
 
@@ -336,7 +334,7 @@ function calculateTotalExpenses() {
 
     const todayYear = todayDate.getFullYear();
 
-    const filterExpenses = getExistingData.filter(function(item) {
+    const filterExpenses = getExistingData.filter(item => {
         const itemDate = item.date.split("-");
         console.log(itemDate);
         const expenseDate = new Date(parseInt(itemDate[0]), parseInt(itemDate[1]) - 1, parseInt(itemDate[2]));
@@ -344,7 +342,7 @@ function calculateTotalExpenses() {
         return expenseDate.getMonth() === todayMonth && expenseDate.getFullYear() === todayYear;
     });
 
-    const totalExpenses = filterExpenses.reduce(function(accumulator, item) {
+    const totalExpenses = filterExpenses.reduce((accumulator, item) => {
         return accumulator + (item.cost * item.quantity)
     }, 0);
 
