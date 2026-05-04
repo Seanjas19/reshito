@@ -30,17 +30,25 @@ body {
 
 .form-container {
     margin: 0 auto;
-    width: 500px;
+    width: 100%;
+    grid-row: span 2;
 }
 
 .summary {
+    font-size: large;
+    font-weight: 700;
     text-align: center;
     margin-top: 2rem;
+    background-color: var(--border-color);
+    width: 50%;
+    height: 50%;
+    margin: auto;
+    padding: 1rem 1rem;
 }
 
 .table-container {
     margin: 0 auto;
-    width: 800px;
+    width: 100%;
 }
 
 .form label {
@@ -158,4 +166,13 @@ table {
     padding: 0.5rem 0.5rem;
     border-left: 4px solid var(--error-color);
     border-radius: 8px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 auto;
+    max-width: 1200px;
+    gap: 2rem;
+    padding: 2rem;
 }

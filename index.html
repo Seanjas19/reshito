@@ -7,58 +7,60 @@
     <title>Reshito</title>
 </head>
 <body>
-    <div class="form-container">
+    <div class="layout">
+        <div class="form-container">
 
-        <form class="form" id="form">
+            <form class="form" id="form">
 
-            <label for="date">Date:</label>
-            <input type="date" class="date" id="date">
-            <p class="err-msg" id="date-err-msg"></p>
+                <label for="date">Date:</label>
+                <input type="date" class="date" id="date">
+                <p class="err-msg" id="date-err-msg"></p>
 
-            <label for="payment-method">Payment Method:</label>
-            <select name="payment-method" class="payment-method" id="payment-method">
-                <option value="">Payment Method</option>
-                <option value="Cash">Cash</option>
-                <option value="Credit/Debit Card">Credit/Debit Card</option>
-                <option value="FPX Banking">FPX Banking</option>
-                <option value="E-Wallet">E-Wallet</option>
-            </select>
-            <p class="err-msg" id="payment-err-msg"></p>
+                <label for="payment-method">Payment Method:</label>
+                <select name="payment-method" class="payment-method" id="payment-method">
+                    <option value="">Payment Method</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Credit/Debit Card">Credit/Debit Card</option>
+                    <option value="FPX Banking">FPX Banking</option>
+                    <option value="E-Wallet">E-Wallet</option>
+                </select>
+                <p class="err-msg" id="payment-err-msg"></p>
 
-            <label for="description">Description: </label>
-            <input type="text" placeholder="Description" class="description" id="description">
-            <p class="err-msg" id="descript-err-msg"></p>
+                <label for="description">Description: </label>
+                <input type="text" placeholder="Description" class="description" id="description">
+                <p class="err-msg" id="descript-err-msg"></p>
 
-            <label for="quantity">Quantity: </label>
-            <input type="number" placeholder="Quantity" class="quantity" id="quantity">
-            <p class="err-msg" id="quantity-err-msg"></p>
+                <label for="quantity">Quantity: </label>
+                <input type="number" placeholder="Quantity" class="quantity" id="quantity">
+                <p class="err-msg" id="quantity-err-msg"></p>
 
-            <label for="cost">Cost: </label>
-            <input type="number" placeholder="Cost" class="cost" id="cost">
-            <p class="err-msg" id="cost-err-msg"></p>
-            <button type="submit" class="submit" id="submit">Submit</button>
-        </form>
-    </div>
-    <div class="summary">
-        <p>Total spend this month: RM <span id="total-spend-amount"></span></p>
-    </div>
-    <div class="table-container">
-        <table class="table" id="table">
-            <thead class="table-head" id="table-head">
-                <tr>
-                    <th>Date</th>
-                    <th class="payment-header-cell">Payment Method</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Cost</th>
-                    <th>Total</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody class="table-body" id="table-body">
-                
-            </tbody>
-        </table>
+                <label for="cost">Cost: </label>
+                <input type="number" placeholder="Cost" class="cost" id="cost">
+                <p class="err-msg" id="cost-err-msg"></p>
+                <button type="submit" class="submit" id="submit">Submit</button>
+            </form>
+        </div>
+        <div class="summary">
+            <p>Total spend this month: RM <span id="total-spend-amount"></span></p>
+        </div>
+        <div class="table-container">
+            <table class="table" id="table">
+                <thead class="table-head" id="table-head">
+                    <tr>
+                        <th>Date</th>
+                        <th class="payment-header-cell">Payment Method</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Cost</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body" id="table-body">
+                    
+                </tbody>
+            </table>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
