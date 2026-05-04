@@ -6,6 +6,40 @@ let editingId = null;
 
 let editingRow = null;
 
+let deletingData = null;
+
+let deletingRow = null;
+
+const confirmBtn = document.getElementById("confirm-btn");
+
+const cancelBtn = document.getElementById("cancel-btn");
+
+const modalOverlay = document.getElementById("modal-overlay");
+
+confirmBtn.addEventListener("click", function() {
+
+    const getExistedData = JSON.parse(localStorage.getItem(storageKey) || "[]"); 
+
+    const filterData = getExistedData.filter(function(item) {
+        return item.id !== deletingData.id;
+    });
+
+    localStorage.setItem(storageKey, JSON.stringify(filterData));
+
+    deletingRow.remove();
+
+    calculateTotalExpenses();
+
+    modalOverlay.style.display = "none";
+});
+
+
+
+cancelBtn.addEventListener("click", function() {
+    modalOverlay.style.display = "none";
+});
+
+
 displayExistedData();
 
 calculateTotalExpenses();
@@ -219,17 +253,12 @@ function buildTableRow(data, referenceRow) {
 
     deleteBtn.addEventListener("click", function() {
 
-        const getExistedData = JSON.parse(localStorage.getItem(storageKey) || "[]"); 
+        modalOverlay.style.display = "block";
 
-        const filterData = getExistedData.filter(function(item) {
-            return item.id !== data.id;
-        });
+        deletingData = data;
 
-        localStorage.setItem(storageKey, JSON.stringify(filterData));
+        deletingRow = tableRow;
 
-        tableRow.remove();
-
-        calculateTotalExpenses();
     })
 };
 
