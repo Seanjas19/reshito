@@ -235,3 +235,13 @@ table {
 .cancel-btn:active {
     background-color: var(--grey);
 }
+
+@media (max-width: 768px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+}
