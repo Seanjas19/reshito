@@ -16,6 +16,7 @@ const cancelBtn = document.getElementById("cancel-btn");
 
 const modalOverlay = document.getElementById("modal-overlay");
 
+
 confirmBtn.addEventListener("click", () => {
 
     const getExistedData = JSON.parse(localStorage.getItem(storageKey) || "[]"); 
@@ -166,6 +167,7 @@ function validateForm() {
 };
 
 //build table row
+// referenceRow: if provided, insert before it (used when editing to replace a row in-place)
 function buildTableRow(data, referenceRow) {
 
     //get table body element id
@@ -299,6 +301,7 @@ function declarationData(id) {
     };
 };
 
+// update localStorage and re-render the edited row in the same position
 function updateTableRow() {
     const getExistingData = JSON.parse(localStorage.getItem(storageKey) || "[]");
 

@@ -89,6 +89,7 @@ body {
     gap: 10px;
 }
 
+/* 为了不让字体因为宽度而被移到下一行弄到很难看 */
 .payment-header-cell {
     white-space: nowrap;
 }
@@ -164,6 +165,7 @@ table {
     border-radius: 8px;
 }
 
+/* 用 1fr 是为了让grid更容易明白。就是分裂为1 fraction */
 .layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -183,6 +185,9 @@ table {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+
+/* top: 50% + left: 50% 是把元素的左上角放到窗口中间，
+transform: translate(-50%, -50%) 是把元素往左上方移自己宽高的一半，让元素的中心点对齐窗口中间。 */
 .modal {
     position: fixed;
     top: 50%;
